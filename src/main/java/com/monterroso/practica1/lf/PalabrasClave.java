@@ -8,20 +8,6 @@ package com.monterroso.practica1.lf;
  *
  * @author seo
  */
-public enum TipoToken {
-    
-    //preguntar por uso de la enum *********
-    
-    DIRECTIVA,
-    PALABRA_RESERVADA,
-    COMANDO_IA,
-    FUNCION,
-    CONECTOR,
-    IDENTIFICADOR,
-    LITERAL_CADENA,
-    LITERAL_ENTERO,
-    LITERAL_DECIMAL,
-    OPERADOR,
-    DELIMITADOR
+public class PalabrasClave {
     
 }

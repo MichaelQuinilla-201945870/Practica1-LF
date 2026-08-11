@@ -11,6 +11,9 @@ package com.monterroso.practica1.lf;
 public class Practica1LF {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        String codigo = new LectorArchivo().leerArchivo();
+        AnalizadorLexico analizador = new AnalizadorLexico(codigo);
+        analizador.analizar();
+        System.out.println("anallisis terminado. cantidad de letras procesadas: " + codigo.length());
     }
 }
