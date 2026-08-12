@@ -25,9 +25,7 @@ public class AnalizadorLexico {
     }
 
     public void analizar() {
-        
         while (!finDeArchivo()) {
-            
             char actual = charActual();
             if (actual == '\n') {
                 avanzar();
@@ -40,13 +38,184 @@ public class AnalizadorLexico {
                 columna++;
                 continue;
             }
-            
+            if (actual == '@') {
+                reconocerDirectiva();
+                continue;
+            }
+            if (Character.isLetter(actual) || actual == '_') {
+                reconocerIdentificadorOPalabraClave();
+                continue;
+            }
+            if (actual == '"') {
+                reconocerCadena();
+                continue;
+            }
+            if (Character.isDigit(actual)) {
+                reconocerNumero();
+                continue;
+            }
+            if (actual == '/' && (siguiente() == '/' || siguiente() == '*')) {
+                reconocerComentario();
+                continue;
+            }
+            reconocerSimbolo();
+        }
+    }
+
+    private String consumirIdentificador() {
+        int inicio = pos;
+        while (!finDeArchivo() && (Character.isLetterOrDigit(charActual()) || charActual() == '_')) {
+            avanzar();
+        }
+        return codigoFuente.substring(inicio, pos);
+    }
+
+    private void reconocerIdentificadorOPalabraClave() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        String lexema = consumirIdentificador();
+        columna += lexema.length();
+
+        TipoToken tipo = PalabrasClave.tipoDePalabra(lexema);
+        if (tipo == null) {
+            tipo = TipoToken.IDENTIFICADOR;
+        }
+        tokens.add(new Token(tokens.size() + 1, lexema, tipo, filaInicio, columnaInicio));
+    }
+
+    private void reconocerDirectiva() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        avanzar();
+        columna++; // consume el '@'
+
+        String nombre = consumirIdentificador();
+        columna += nombre.length();
+
+        if (PalabrasClave.esDirectivaValida(nombre)) {
+            tokens.add(new Token(tokens.size() + 1, "@" + nombre, TipoToken.DIRECTIVA, filaInicio, columnaInicio));
+        } else {
+            errores.add(new ErrorLexico("@" + nombre, "Directiva no reconocida", filaInicio, columnaInicio));
+        }
+    }
+
+    private char siguiente() {
+        if (pos + 1 >= codigoFuente.length()) {
+            return '\0';
+        }
+        return codigoFuente.charAt(pos + 1);
+    }
+
+    private void reconocerCadena() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        int inicio = pos;
+
+        avanzar();
+        columna++; // consume la comilla de apertura
+
+        while (!finDeArchivo() && charActual() != '"' && charActual() != '\n') {
             avanzar();
             columna++;
         }
+
+        if (!finDeArchivo() && charActual() == '"') {
+            avanzar();
+            columna++; // consume la comilla de cierre
+            String lexema = codigoFuente.substring(inicio, pos);
+            tokens.add(new Token(tokens.size() + 1, lexema, TipoToken.LITERAL_CADENA, filaInicio, columnaInicio));
+        } else {
+            String lexema = codigoFuente.substring(inicio, pos);
+            errores.add(new ErrorLexico(lexema, "Cadena sin cerrar", filaInicio, columnaInicio));
+        }
     }
-    
-    // palabra clave, directivas, consumidores...
+
+    private void reconocerNumero() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        int inicio = pos;
+
+        while (!finDeArchivo() && Character.isDigit(charActual())) {
+            avanzar();
+        }
+
+        TipoToken tipo = TipoToken.LITERAL_ENTERO;
+        if (!finDeArchivo() && charActual() == '.' && Character.isDigit(siguiente())) {
+            avanzar(); // consume el '.'
+            while (!finDeArchivo() && Character.isDigit(charActual())) {
+                avanzar();
+            }
+            tipo = TipoToken.LITERAL_DECIMAL;
+        }
+
+        String lexema = codigoFuente.substring(inicio, pos);
+        columna += lexema.length();
+        tokens.add(new Token(tokens.size() + 1, lexema, tipo, filaInicio, columnaInicio));
+    }
+
+    private void reconocerComentario() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+
+        if (siguiente() == '/') {
+            while (!finDeArchivo() && charActual() != '\n') {
+                avanzar();
+                columna++;
+            }
+            return; // comentario de línea: no genera token
+        }
+
+        avanzar();
+        columna++; // consume '/'
+        avanzar();
+        columna++; // consume '*'
+
+        while (true) {
+            if (finDeArchivo()) {
+                errores.add(new ErrorLexico("/*", "Comentario de bloque sin cerrar", filaInicio, columnaInicio));
+                return;
+            }
+            if (charActual() == '*' && siguiente() == '/') {
+                avanzar();
+                columna++;
+                avanzar();
+                columna++;
+                return; // comentario cerrado correctamente: tampoco genera token
+            }
+            if (charActual() == '\n') {
+                avanzar();
+                fila++;
+                columna = 1;
+            } else {
+                avanzar();
+                columna++;
+            }
+        }
+    }
+
+    private void reconocerSimbolo() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        char c = charActual();
+        avanzar();
+        columna++;
+
+        switch (c) {
+            case '=' -> tokens.add(new Token(tokens.size() + 1, "=", TipoToken.OPERADOR, filaInicio, columnaInicio));
+            case '+' -> tokens.add(new Token(tokens.size() + 1, "+", TipoToken.OPERADOR, filaInicio, columnaInicio));
+            case '{', '}', '(', ')', ',' -> tokens.add(new Token(tokens.size() + 1, String.valueOf(c), TipoToken.DELIMITADOR, filaInicio, columnaInicio));
+            case '-' -> {
+                if (!finDeArchivo() && charActual() == '>') {
+                    avanzar();
+                    columna++;
+                    tokens.add(new Token(tokens.size() + 1, "->", TipoToken.CONECTOR, filaInicio, columnaInicio));
+                } else {
+                    errores.add(new ErrorLexico("-", "Carácter no reconocido", filaInicio, columnaInicio));
+                }
+            }
+            default -> errores.add(new ErrorLexico(String.valueOf(c), "Carácter no reconocido", filaInicio, columnaInicio));
+        }
+    }
 
     private char charActual() {
         return codigoFuente.charAt(pos);
