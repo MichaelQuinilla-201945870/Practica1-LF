@@ -8,45 +8,34 @@ package com.monterroso.practica1.lf;
  *
  * @author seo
  */
+
+
+//Diccionario, clasifica palabras, determina si pertenece al vocabulario y le da el token al que pertenecen.
+
 public class PalabrasClave {
+    
+    
+    // evalua una cadena de texto y determina su clasificacion.
 
     public static TipoToken tipoDePalabra(String palabra) {
-        switch (palabra) {
-            case "AGENTE":
-            case "contexto":
-            case "variable":
-            case "EJECUTAR":
-            case "EXPORTAR":
-                return TipoToken.PALABRA_RESERVADA;
-            case "PREGUNTAR":
-            case "GENERAR":
-            case "RESUMIR":
-            case "ANALIZAR":
-            case "TRADUCIR":
-            case "CLASIFICAR":
-            case "EXTRAER":
-                return TipoToken.COMANDO_IA;
-            case "CARGAR":
-                return TipoToken.FUNCION;
-            case "SOBRE":
-            case "DESDE":
-            case "EN":
-            case "COMO":
-                return TipoToken.CONECTOR;
-            default:
-                return null; // no es palabra clave -> es identificador
-        }
+        return switch (palabra) {
+            case "AGENTE", "contexto", "variable", "EJECUTAR", "EXPORTAR" -> TipoToken.PALABRA_RESERVADA;
+            case "PREGUNTAR", "GENERAR", "RESUMIR", "ANALIZAR", "TRADUCIR", "CLASIFICAR", "EXTRAER" -> TipoToken.COMANDO_IA;
+            case "CARGAR" -> TipoToken.FUNCION;
+            case "SOBRE", "DESDE", "EN", "COMO" -> TipoToken.CONECTOR;
+            default -> null;  // no es palabra clave -> es identificador
+        };
     }
+    
+    
+    // verifica si el texto que le sigue a un símbolo "@" corresponde a una directiva valida
+    // return true si es una directiva valida, false en caso contrario.
 
     public static boolean esDirectivaValida(String nombre) {
-        switch (nombre) {
-            case "modelo":
-            case "rol":
-            case "formato":
-                return true;
-            default:
-                return false;
-        }
+        return switch (nombre) {
+            case "modelo", "rol", "formato" -> true;
+            default -> false;
+        };
     }
 
 }

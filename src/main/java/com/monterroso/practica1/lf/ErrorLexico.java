@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -10,13 +10,13 @@ package com.monterroso.practica1.lf;
  */
 public class ErrorLexico {
     
-    private final String lexema;
-    private final String descripcion;
+    private final String lexema;    // caracter o fragmento de texto invalido
+    private final String descripcion;           // motivo del rechazo
     private final int fila;
     private final int columna;
 
     public ErrorLexico(String lexema, String descripcion, int fila, int columna) {
-        this.lexema = lexema;
+        this.lexema = lexema;   
         this.descripcion = descripcion;
         this.fila = fila;
         this.columna = columna;

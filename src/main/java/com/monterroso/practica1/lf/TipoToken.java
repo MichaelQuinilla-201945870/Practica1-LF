@@ -8,10 +8,11 @@ package com.monterroso.practica1.lf;
  *
  * @author seo
  */
+
+//catalogo estricto de los tipos de componentes lexicos validos en el leguaje
+
 public enum TipoToken {
-    
-    //preguntar por uso de la enum *********
-    
+        
     DIRECTIVA,
     PALABRA_RESERVADA,
     COMANDO_IA,

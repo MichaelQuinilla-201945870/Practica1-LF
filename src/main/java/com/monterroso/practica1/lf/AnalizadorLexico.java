@@ -13,26 +13,30 @@ import java.util.List;
  */
 public class AnalizadorLexico {
 
-    private final String codigoFuente;
-    private int pos = 0; //sera el indice del caracter que se esta evaluando en el momento dentro de codigofuente
+    private final String codigoFuente; // el texto completo a analizar
+    private int indice = 0; //sera el indice del caracter que se esta evaluando en el momento dentro de codigofuente
     private int fila = 1;
     private int columna = 1;
-    private final List<Token> tokens = new ArrayList<>();
-    private final List<ErrorLexico> errores = new ArrayList<>();
+    private final List<Token> tokens = new ArrayList<>();  // libreta de aciertos
+    private final List<ErrorLexico> errores = new ArrayList<>(); // libreta de errores
 
     public AnalizadorLexico(String codigoFuente) {
         this.codigoFuente = codigoFuente;  // todo el texto del .pz, leido completo, como una sola cadena larga
     }
 
     public void analizar() {
+        
         while (!finDeArchivo()) {
+            
             char actual = charActual();
+            
             if (actual == '\n') {
                 avanzar();
                 fila++;
                 columna = 1;
                 continue;
             }
+            
             if (Character.isWhitespace(actual)) {
                 avanzar();
                 columna++;
@@ -62,18 +66,61 @@ public class AnalizadorLexico {
         }
     }
 
-    private String consumirIdentificador() {
-        int inicio = pos;
+    private char siguiente() {
+
+        if (indice + 1 >= codigoFuente.length()) {
+            return '\0';
+        }
+        return codigoFuente.charAt(indice + 1);
+    }
+
+    private char charActual() {
+        return codigoFuente.charAt(indice);
+    }
+
+    private boolean finDeArchivo() {
+        return indice >= codigoFuente.length();  //para saber si el arvhico ya termino
+    }
+
+    private void avanzar() {
+        indice++;
+    }
+
+    private void reconocerDirectiva() {
+        int filaInicio = fila;
+        int columnaInicio = columna;
+        avanzar();
+        columna++; // consume el '@'
+
+        String nombre = Encadenar();
+        
+        columna += nombre.length();
+
+        if (PalabrasClave.esDirectivaValida(nombre)) {
+            tokens.add(new Token(tokens.size() + 1, "@" + nombre, TipoToken.DIRECTIVA, filaInicio, columnaInicio));
+        } else {
+            errores.add(new ErrorLexico("@" + nombre, "Directiva no reconocida", filaInicio, columnaInicio));
+        }
+    }
+    
+    
+    // leector de caracteres consecutivamente mientras formen parte de un identificador  o palabra clave (letras, dígitos o guiones bajos).
+   
+     private String Encadenar() {
+         
+        int inicio = indice;
         while (!finDeArchivo() && (Character.isLetterOrDigit(charActual()) || charActual() == '_')) {
             avanzar();
         }
-        return codigoFuente.substring(inicio, pos);
+        return codigoFuente.substring(inicio, indice);
     }
 
+
     private void reconocerIdentificadorOPalabraClave() {
+
         int filaInicio = fila;
         int columnaInicio = columna;
-        String lexema = consumirIdentificador();
+        String lexema = Encadenar();
         columna += lexema.length();
 
         TipoToken tipo = PalabrasClave.tipoDePalabra(lexema);
@@ -83,33 +130,11 @@ public class AnalizadorLexico {
         tokens.add(new Token(tokens.size() + 1, lexema, tipo, filaInicio, columnaInicio));
     }
 
-    private void reconocerDirectiva() {
-        int filaInicio = fila;
-        int columnaInicio = columna;
-        avanzar();
-        columna++; // consume el '@'
-
-        String nombre = consumirIdentificador();
-        columna += nombre.length();
-
-        if (PalabrasClave.esDirectivaValida(nombre)) {
-            tokens.add(new Token(tokens.size() + 1, "@" + nombre, TipoToken.DIRECTIVA, filaInicio, columnaInicio));
-        } else {
-            errores.add(new ErrorLexico("@" + nombre, "Directiva no reconocida", filaInicio, columnaInicio));
-        }
-    }
-
-    private char siguiente() {
-        if (pos + 1 >= codigoFuente.length()) {
-            return '\0';
-        }
-        return codigoFuente.charAt(pos + 1);
-    }
-
+   
     private void reconocerCadena() {
         int filaInicio = fila;
         int columnaInicio = columna;
-        int inicio = pos;
+        int inicio = indice;
 
         avanzar();
         columna++; // consume la comilla de apertura
@@ -122,10 +147,10 @@ public class AnalizadorLexico {
         if (!finDeArchivo() && charActual() == '"') {
             avanzar();
             columna++; // consume la comilla de cierre
-            String lexema = codigoFuente.substring(inicio, pos);
+            String lexema = codigoFuente.substring(inicio, indice);
             tokens.add(new Token(tokens.size() + 1, lexema, TipoToken.LITERAL_CADENA, filaInicio, columnaInicio));
         } else {
-            String lexema = codigoFuente.substring(inicio, pos);
+            String lexema = codigoFuente.substring(inicio, indice);
             errores.add(new ErrorLexico(lexema, "Cadena sin cerrar", filaInicio, columnaInicio));
         }
     }
@@ -133,7 +158,7 @@ public class AnalizadorLexico {
     private void reconocerNumero() {
         int filaInicio = fila;
         int columnaInicio = columna;
-        int inicio = pos;
+        int inicio = indice;
 
         while (!finDeArchivo() && Character.isDigit(charActual())) {
             avanzar();
@@ -148,7 +173,7 @@ public class AnalizadorLexico {
             tipo = TipoToken.LITERAL_DECIMAL;
         }
 
-        String lexema = codigoFuente.substring(inicio, pos);
+        String lexema = codigoFuente.substring(inicio, indice);
         columna += lexema.length();
         tokens.add(new Token(tokens.size() + 1, lexema, tipo, filaInicio, columnaInicio));
     }
@@ -162,11 +187,12 @@ public class AnalizadorLexico {
                 avanzar();
                 columna++;
             }
-            return; // comentario de línea: no genera token
+            return; // comentario de linea: no genera token
         }
 
         avanzar();
         columna++; // consume '/'
+        
         avanzar();
         columna++; // consume '*'
 
@@ -201,9 +227,12 @@ public class AnalizadorLexico {
         columna++;
 
         switch (c) {
-            case '=' -> tokens.add(new Token(tokens.size() + 1, "=", TipoToken.OPERADOR, filaInicio, columnaInicio));
-            case '+' -> tokens.add(new Token(tokens.size() + 1, "+", TipoToken.OPERADOR, filaInicio, columnaInicio));
-            case '{', '}', '(', ')', ',' -> tokens.add(new Token(tokens.size() + 1, String.valueOf(c), TipoToken.DELIMITADOR, filaInicio, columnaInicio));
+            case '=' ->
+                tokens.add(new Token(tokens.size() + 1, "=", TipoToken.OPERADOR, filaInicio, columnaInicio));
+            case '+' ->
+                tokens.add(new Token(tokens.size() + 1, "+", TipoToken.OPERADOR, filaInicio, columnaInicio));
+            case '{', '}', '(', ')', ',' ->
+                tokens.add(new Token(tokens.size() + 1, String.valueOf(c), TipoToken.DELIMITADOR, filaInicio, columnaInicio));
             case '-' -> {
                 if (!finDeArchivo() && charActual() == '>') {
                     avanzar();
@@ -213,21 +242,12 @@ public class AnalizadorLexico {
                     errores.add(new ErrorLexico("-", "Carácter no reconocido", filaInicio, columnaInicio));
                 }
             }
-            default -> errores.add(new ErrorLexico(String.valueOf(c), "Carácter no reconocido", filaInicio, columnaInicio));
+            default ->
+                errores.add(new ErrorLexico(String.valueOf(c), "Carácter no reconocido", filaInicio, columnaInicio));
         }
     }
 
-    private char charActual() {
-        return codigoFuente.charAt(pos);
-    }
-
-    private boolean finDeArchivo() {
-        return pos >= codigoFuente.length();  //para saber si el arvhico ya termino
-    }
-
-    private void avanzar() {
-        pos++;
-    }
+   
 
     public List<Token> getTokens() {
         return tokens;

@@ -4,6 +4,8 @@
 
 package com.monterroso.practica1.lf;
 
+import java.util.List;
+
 /**
  *
  * @author seo
@@ -14,6 +16,29 @@ public class Practica1LF {
         String codigo = new LectorArchivo().leerArchivo();
         AnalizadorLexico analizador = new AnalizadorLexico(codigo);
         analizador.analizar();
-        System.out.println("anallisis terminado. cantidad de letras procesadas: " + codigo.length());
+
+        List<Token> tokens = analizador.getTokens();
+        List<ErrorLexico> errores = analizador.getErrores();
+
+        System.out.println();
+        System.out.println("=== TOKENS RECONOCIDOS (" + tokens.size() + ") ===");
+        System.out.printf("%-4s %-30s %-20s %-6s %-8s%n", "#", "Lexema", "Tipo", "Fila", "Columna");
+        for (Token t : tokens) {
+            System.out.printf("%-4d %-30s %-20s %-6d %-8d%n",
+                t.getNumero(), t.getLexema(), t.getTipo(), t.getFila(), t.getColumna());
+        }
+
+        System.out.println();
+        System.out.println("=== ERRORES LÉXICOS (" + errores.size() + ") ===");
+        if (errores.isEmpty()) {
+            System.out.println("No se encontraron errores léxicos.");
+        } else {
+            System.out.printf("%-25s %-30s %-6s %-8s%n", "Lexema", "Descripción", "Fila", "Columna");
+            for (ErrorLexico e : errores) {
+                System.out.printf("%-25s %-30s %-6d %-8d%n",
+                    e.getLexema(), e.getDescripcion(), e.getFila(), e.getColumna());
+            }
+        }
     }
+    
 }
