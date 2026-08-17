@@ -132,6 +132,7 @@ public class AnalizadorLexico {
 
    
     private void reconocerCadena() {
+        
         int filaInicio = fila;
         int columnaInicio = columna;
         int inicio = indice;
@@ -165,8 +166,9 @@ public class AnalizadorLexico {
         }
 
         TipoToken tipo = TipoToken.LITERAL_ENTERO;
+        
         if (!finDeArchivo() && charActual() == '.' && Character.isDigit(siguiente())) {
-            avanzar(); // consume el '.'
+            avanzar(); // consume el '.' para decimales
             while (!finDeArchivo() && Character.isDigit(charActual())) {
                 avanzar();
             }
@@ -191,10 +193,10 @@ public class AnalizadorLexico {
         }
 
         avanzar();
-        columna++; // consume '/'
+        columna++; // salta '/'
         
         avanzar();
-        columna++; // consume '*'
+        columna++; // salta '*'
 
         while (true) {
             if (finDeArchivo()) {

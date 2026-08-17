@@ -13,6 +13,7 @@ import java.util.List;
 public class Practica1LF {
 
     public static void main(String[] args) {
+        
         String codigo = new LectorArchivo().leerArchivo();
         AnalizadorLexico analizador = new AnalizadorLexico(codigo);
         analizador.analizar();
@@ -24,9 +25,9 @@ public class Practica1LF {
         System.out.println("=== TOKENS RECONOCIDOS (" + tokens.size() + ") ===");
         System.out.printf("%-4s %-30s %-20s %-6s %-8s%n", "#", "Lexema", "Tipo", "Fila", "Columna");
         for (Token t : tokens) {
-            System.out.printf("%-4d %-30s %-20s %-6d %-8d%n",
-                t.getNumero(), t.getLexema(), t.getTipo(), t.getFila(), t.getColumna());
+            System.out.printf("%-4d %-30s %-20s %-6d %-8d%n", t.getNumero(), t.getLexema(), t.getTipo(), t.getFila(), t.getColumna());
         }
+        
 
         System.out.println();
         System.out.println("=== ERRORES LÉXICOS (" + errores.size() + ") ===");
@@ -35,8 +36,7 @@ public class Practica1LF {
         } else {
             System.out.printf("%-25s %-30s %-6s %-8s%n", "Lexema", "Descripción", "Fila", "Columna");
             for (ErrorLexico e : errores) {
-                System.out.printf("%-25s %-30s %-6d %-8d%n",
-                    e.getLexema(), e.getDescripcion(), e.getFila(), e.getColumna());
+                System.out.printf("%-25s %-30s %-6d %-8d%n", e.getLexema(), e.getDescripcion(), e.getFila(), e.getColumna());
             }
         }
     }

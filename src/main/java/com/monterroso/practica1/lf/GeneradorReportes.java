@@ -23,13 +23,14 @@ public class GeneradorReportes {
         html.append("<html><head><meta charset=\"UTF-8\"><title>Reporte de Tokens</title>")
                 .append(estilos())
                 .append("</head><body>")
-                .append("<h1>Reporte de Tokens</h1>")
+                .append("<h1>Reporte de Tokens</h1>") // encabezados de la tabla
+                
                 .append("<p>Total de tokens reconocidos: ").append(tokens.size()).append("</p>")
                 .append("<table><tr><th>#</th><th>Lexema</th><th>Tipo</th><th>Fila</th><th>Columna</th></tr>");
 
         for (Token t : tokens) {
             html.append("<tr><td>").append(t.getNumero()).append("</td>")
-                    .append("<td>").append(escaparHtml(t.getLexema())).append("</td>")
+                    .append("<td>").append(correctorSimbolos(t.getLexema())).append("</td>")
                     .append("<td>").append(t.getTipo()).append("</td>")
                     .append("<td>").append(t.getFila()).append("</td>")
                     .append("<td>").append(t.getColumna()).append("</td></tr>");
@@ -49,7 +50,7 @@ public class GeneradorReportes {
                 + "</style>";
     }
 
-    private String escaparHtml(String texto) {
+    private String correctorSimbolos(String texto) {  //cambia los signos para que el html no se arruine
         return texto.replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
@@ -65,20 +66,21 @@ public class GeneradorReportes {
     }
 
     public void generarReporteErrores(List<ErrorLexico> errores, String rutaSalida) {
+        
         StringBuilder html = new StringBuilder();
         html.append("<html><head><meta charset=\"UTF-8\"><title>Reporte de Errores</title>")
                 .append(estilos())
                 .append("</head><body>")
-                .append("<h1>Reporte de Errores L\u00e9xicos</h1>");
+                .append("<h1>Reporte de Errores Lexicos</h1>");
 
         if (errores.isEmpty()) {
-            html.append("<p>No se encontraron errores l\u00e9xicos.</p>");
+            html.append("<p>No se encontraron errores lexicos.</p>");
         } else {
             html.append("<p>Total de errores encontrados: ").append(errores.size()).append("</p>")
-                    .append("<table><tr><th>Lexema / Car\u00e1cter</th><th>Descripci\u00f3n</th><th>Fila</th><th>Columna</th></tr>");
+                    .append("<table><tr><th>Lexema / Caracter</th><th>Descripcion</th><th>Fila</th><th>Columna</th></tr>");
             for (ErrorLexico e : errores) {
-                html.append("<tr><td>").append(escaparHtml(e.getLexema())).append("</td>")
-                        .append("<td>").append(escaparHtml(e.getDescripcion())).append("</td>")
+                html.append("<tr><td>").append(correctorSimbolos(e.getLexema())).append("</td>")
+                        .append("<td>").append(correctorSimbolos(e.getDescripcion())).append("</td>")
                         .append("<td>").append(e.getFila()).append("</td>")
                         .append("<td>").append(e.getColumna()).append("</td></tr>");
             }
