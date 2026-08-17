@@ -2,8 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.monterroso.practica1.lf;
+package com.monterroso.pract1.analizador;
 
+import com.monterroso.pract1.analizador.archivos.LectorArchivo;
+import com.monterroso.pract1.analizador.motor.AnalizadorLexico;
+import com.monterroso.pract1.analizador.modelos.Token;
+import com.monterroso.pract1.analizador.modelos.ErrorLexico;
 import java.util.List;
 
 /**

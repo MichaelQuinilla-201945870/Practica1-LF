@@ -1,6 +1,8 @@
-package com.monterroso.practica1.lf;
+package com.monterroso.pract1.analizador.archivos;
 
 
+import com.monterroso.pract1.analizador.modelos.Token;
+import com.monterroso.pract1.analizador.modelos.ErrorLexico;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
