@@ -8,6 +8,22 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>com.monterroso.practica1.lf.Practica1LF</exec.mainClass>
+        <exec.mainClass>com.monterroso.pract1.analizador.Practica1LF</exec.mainClass>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.monterroso.pract1.analizador.Practica1LF</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

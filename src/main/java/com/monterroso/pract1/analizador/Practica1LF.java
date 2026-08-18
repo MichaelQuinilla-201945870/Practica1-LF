@@ -4,6 +4,7 @@
 
 package com.monterroso.pract1.analizador;
 
+import com.monterroso.pract1.analizador.archivos.GeneradorReportes;
 import com.monterroso.pract1.analizador.archivos.LectorArchivo;
 import com.monterroso.pract1.analizador.motor.AnalizadorLexico;
 import com.monterroso.pract1.analizador.modelos.Token;
@@ -34,7 +35,7 @@ public class Practica1LF {
         
 
         System.out.println();
-        System.out.println("=== ERRORES LÉXICOS (" + errores.size() + ") ===");
+        System.out.println("== ERRORES LÉXICOS (" + errores.size() + ") ==");
         if (errores.isEmpty()) {
             System.out.println("No se encontraron errores léxicos.");
         } else {
@@ -43,6 +44,12 @@ public class Practica1LF {
                 System.out.printf("%-25s %-30s %-6d %-8d%n", e.getLexema(), e.getDescripcion(), e.getFila(), e.getColumna());
             }
         }
+        
+        GeneradorReportes reportes = new GeneradorReportes();
+        reportes.generarReporteTokens(tokens, "reporte_tokens.html");
+        reportes.generarReporteErrores(errores, "reporte_errores.html");
+        
+        System.out.println(" Reportes generados en la carpeta donde se ejecuto el programa");
     }
     
 }
