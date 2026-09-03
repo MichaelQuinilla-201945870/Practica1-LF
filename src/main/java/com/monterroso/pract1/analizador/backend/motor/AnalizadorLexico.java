@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.monterroso.pract1.analizador.motor;
+package com.monterroso.pract1.analizador.backend.motor;
 
-import com.monterroso.pract1.analizador.modelos.TipoToken;
-import com.monterroso.pract1.analizador.modelos.Token;
-import com.monterroso.pract1.analizador.modelos.ErrorLexico;
+
+import com.monterroso.pract1.analizador.backend.modelos.ErrorLexico;
+import com.monterroso.pract1.analizador.backend.modelos.TipoToken;
+import com.monterroso.pract1.analizador.backend.modelos.Token;
 import java.util.ArrayList;
 import java.util.List;
 

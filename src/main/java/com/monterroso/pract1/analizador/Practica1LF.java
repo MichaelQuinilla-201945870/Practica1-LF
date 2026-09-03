@@ -4,11 +4,12 @@
 
 package com.monterroso.pract1.analizador;
 
-import com.monterroso.pract1.analizador.archivos.GeneradorReportes;
-import com.monterroso.pract1.analizador.archivos.LectorArchivo;
-import com.monterroso.pract1.analizador.motor.AnalizadorLexico;
-import com.monterroso.pract1.analizador.modelos.Token;
-import com.monterroso.pract1.analizador.modelos.ErrorLexico;
+
+import com.monterroso.pract1.analizador.backend.archivos.GeneradorReportes;
+import com.monterroso.pract1.analizador.backend.archivos.LectorArchivo;
+import com.monterroso.pract1.analizador.backend.modelos.ErrorLexico;
+import com.monterroso.pract1.analizador.backend.modelos.Token;
+import com.monterroso.pract1.analizador.backend.motor.AnalizadorLexico;
 import java.util.List;
 
 /**
