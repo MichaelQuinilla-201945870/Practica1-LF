@@ -22,7 +22,7 @@ public class PalabrasClave {
     public static TipoToken tipoDePalabra(String palabra) {
         return switch (palabra) {
             case "AGENTE", "contexto", "variable", "EJECUTAR", "EXPORTAR" -> TipoToken.PALABRA_RESERVADA;
-            case "PREGUNTAR", "GENERAR", "RESUMIR", "ANALIZAR", "TRADUCIR", "CLASIFICAR", "EXTRAER" -> TipoToken.COMANDO_IA;
+            case "PREGUNTAR", "GENERAR", "RESUMIR", "ANALIZAR", "TRADUCIR", "CLASIFICAR", "EXTRAER", "CODIFICAR" -> TipoToken.COMANDO_IA;
             case "CARGAR" -> TipoToken.FUNCION;
             case "SOBRE", "DESDE", "EN", "COMO" -> TipoToken.CONECTOR;
             default -> null;  // no es palabra clave -> es identificador

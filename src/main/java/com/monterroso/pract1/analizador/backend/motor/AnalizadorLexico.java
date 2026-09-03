@@ -196,10 +196,9 @@ public class AnalizadorLexico {
         }
 
         avanzar();
-        columna++; // salta '/'
-        
+        columna++; // consume '/'
         avanzar();
-        columna++; // salta '*'
+        columna++; // consume '*'
 
         while (true) {
             if (finDeArchivo()) {
@@ -214,13 +213,14 @@ public class AnalizadorLexico {
                 return; // comentario cerrado correctamente: tampoco genera token
             }
             if (charActual() == '\n') {
+                errores.add(new ErrorLexico("/*", "Comentario de bloque sin cerrar", filaInicio, columnaInicio));
                 avanzar();
                 fila++;
                 columna = 1;
-            } else {
-                avanzar();
-                columna++;
+                return; // se rinde aqui: el resto se procesa como codigo normal
             }
+            avanzar();
+            columna++;
         }
     }
 
@@ -236,7 +236,7 @@ public class AnalizadorLexico {
                 tokens.add(new Token(tokens.size() + 1, "=", TipoToken.OPERADOR, filaInicio, columnaInicio));
             case '+' ->
                 tokens.add(new Token(tokens.size() + 1, "+", TipoToken.OPERADOR, filaInicio, columnaInicio));
-            case '{', '}', '(', ')', ',' ->
+            case '{', '}', '(', ')', ',', ';' ->
                 tokens.add(new Token(tokens.size() + 1, String.valueOf(c), TipoToken.DELIMITADOR, filaInicio, columnaInicio));
             case '-' -> {
                 if (!finDeArchivo() && charActual() == '>') {
