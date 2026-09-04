@@ -134,29 +134,40 @@ public class AnalizadorLexico {
         tokens.add(new Token(tokens.size() + 1, lexema, tipo, filaInicio, columnaInicio));
     }
 
-   
-    private void reconocerCadena() {
+    private void reconocerCadena(){
         
         int filaInicio = fila;
         int columnaInicio = columna;
-        int inicio = indice;
+
+        //guardar la comilla de apertura como DELIMITADOR
+        tokens.add(new Token(tokens.size() + 1, "\"", TipoToken.DELIMITADOR, filaInicio, columnaInicio));
 
         avanzar();
-        columna++; // consume la comilla de apertura
+        columna++; // consumir la comilla inicial
 
+        int inicioTexto = indice;
+        int colTexto = columna;
+
+        // avanzar por el texto hasta encontrar la comilla de cierre o un salto de linea
         while (!finDeArchivo() && charActual() != '"' && charActual() != '\n') {
             avanzar();
             columna++;
         }
 
+        // se extrae el texto interior (SIN comillas
+        String lexemaCadena = codigoFuente.substring(inicioTexto, indice);
+        if (!lexemaCadena.isEmpty()) { // Solo agregamos el token si hay texto adentro
+            tokens.add(new Token(tokens.size() + 1, lexemaCadena, TipoToken.LITERAL_CADENA, filaInicio, colTexto));
+        }
+
+        // verificamos y guardamos la comilla de cierre
         if (!finDeArchivo() && charActual() == '"') {
+            tokens.add(new Token(tokens.size() + 1, "\"", TipoToken.DELIMITADOR, fila, columna));
             avanzar();
-            columna++; // consume la comilla de cierre
-            String lexema = codigoFuente.substring(inicio, indice);
-            tokens.add(new Token(tokens.size() + 1, lexema, TipoToken.LITERAL_CADENA, filaInicio, columnaInicio));
+            columna++; //comilla final
         } else {
-            String lexema = codigoFuente.substring(inicio, indice);
-            errores.add(new ErrorLexico(lexema, "Cadena sin cerrar", filaInicio, columnaInicio));
+            // por si el archivo termino o hubo salto de linea antes de cerrar
+            errores.add(new ErrorLexico(lexemaCadena, "Cadena sin cerrar (falta comilla final)", filaInicio, colTexto));
         }
     }
 
