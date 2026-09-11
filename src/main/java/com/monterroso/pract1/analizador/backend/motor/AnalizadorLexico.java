@@ -196,6 +196,7 @@ public class AnalizadorLexico {
     }
 
     private void reconocerComentario() {
+        
         int filaInicio = fila;
         int columnaInicio = columna;
 
@@ -225,14 +226,13 @@ public class AnalizadorLexico {
                 return; // comentario cerrado correctamente: tampoco genera token
             }
             if (charActual() == '\n') {
-                errores.add(new ErrorLexico("/*", "Comentario de bloque sin cerrar", filaInicio, columnaInicio));
                 avanzar();
                 fila++;
                 columna = 1;
-                return; // se rinde aqui: el resto se procesa como codigo normal
+            } else {
+                avanzar();
+                columna++;
             }
-            avanzar();
-            columna++;
         }
     }
 
@@ -272,6 +272,10 @@ public class AnalizadorLexico {
 
     public List<ErrorLexico> getErrores() {
         return errores;
+    }
+
+    public int getTotalLineas() {
+        return fila;
     }
 
 }
