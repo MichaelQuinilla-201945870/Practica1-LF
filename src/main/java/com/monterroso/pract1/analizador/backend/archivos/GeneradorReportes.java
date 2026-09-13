@@ -114,8 +114,40 @@ public class GeneradorReportes {
             case LITERAL_CADENA -> "#F8BBD0"; // rosa
             case LITERAL_ENTERO, LITERAL_DECIMAL -> "#00FFFF"; // aqua
             case OPERADOR -> "#B0C4DE"; // gris azulado
-            case DELIMITADOR -> "#7FFF00"; // verde lima 
-            default -> "#000000"; // negro
+            case DELIMITADOR ->
+                "#7FFF00"; // verde lima 
+            default ->
+                "#000000"; // negro
         };
     }
+
+    public void generarReporteEstadisticas(List<Token> tokens, List<ErrorLexico> errores,
+            int totalLineas, String rutaSalida) {
+      
+        StringBuilder html = new StringBuilder();
+        
+        html.append("<html><head><meta charset=\"UTF-8\"><title>Reporte de Estadísticas</title>")
+                .append(estilos())
+                .append("</head><body>")
+                .append("<h1>Reporte de Estadísticas</h1>")
+                .append("<p>Total de tokens: ").append(tokens.size()).append("<br>")
+                .append("Total de líneas: ").append(totalLineas).append("<br>")
+                .append("Total de errores: ").append(errores.size()).append("</p>")
+                .append("<table><tr><th>Tipo de token</th><th>Cantidad</th></tr>");
+
+        for (TipoToken tipo : TipoToken.values()) {
+            int contador = 0;
+            for (Token t : tokens) {
+                if (t.getTipo() == tipo) {
+                    contador++;
+                }
+            }
+            html.append("<tr><td>").append(tipo).append("</td>")
+                    .append("<td>").append(contador).append("</td></tr>");
+        }
+
+        html.append("</table></body></html>");
+        escribirArchivo(rutaSalida, html.toString());
+    }
+
 }

@@ -4,6 +4,7 @@
  */
 package com.monterroso.pract1.analizador.frontend;
 
+import com.monterroso.pract1.analizador.backend.archivos.GeneradorAFD;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -23,6 +24,14 @@ public class VentanaAFD extends javax.swing.JDialog {
     public VentanaAFD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        if (!new java.io.File(RUTA_IMAGEN).exists()) {
+            try {
+                new GeneradorAFD().generarImagen(RUTA_IMAGEN);
+            } catch (Exception ex) {
+                // si falla, cargarImagen() avisa con el mensaje adecuado
+            }
+        }
         cargarImagen();
 
     }
@@ -32,6 +41,7 @@ public class VentanaAFD extends javax.swing.JDialog {
     private void cargarImagen(){
             
         File archivo = new File(RUTA_IMAGEN);
+        
         if (archivo.exists()) {
             javax.swing.ImageIcon icono = new javax.swing.ImageIcon(archivo.getAbsolutePath());
             lblImagenAFD.setIcon(icono);
@@ -58,6 +68,7 @@ public class VentanaAFD extends javax.swing.JDialog {
         btnGuardarImagen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Visor de AFD");
 
         lblImagenAFD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         scrollImagenAFD.setViewportView(lblImagenAFD);
@@ -104,12 +115,24 @@ public class VentanaAFD extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegenerarActionPerformed
-       cargarImagen(); 
+       
+        try {
+            new GeneradorAFD().generarImagen(RUTA_IMAGEN);
+            cargarImagen();
+            
+            JOptionPane.showMessageDialog(this, "AFD regenerado correctamente.");
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pudo generar la imagen. ¿Tienes Graphviz instalado y accesible desde la línea de comandos?\n\n" + ex.getMessage(),
+                    "Error al generar el AFD", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnRegenerarActionPerformed
 
     private void btnGuardarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarImagenActionPerformed
       
-        java.io.File origen = new java.io.File(RUTA_IMAGEN);
+        File origen = new File(RUTA_IMAGEN);
        
         if (!origen.exists()) {
             JOptionPane.showMessageDialog(this, "No hay imagen generada todavía.",

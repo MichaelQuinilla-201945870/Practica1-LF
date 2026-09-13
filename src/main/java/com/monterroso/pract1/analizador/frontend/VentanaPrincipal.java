@@ -268,6 +268,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         reportes.generarReporteTokens(ultimosTokens, "reporte_tokens.html");
         reportes.generarReporteErrores(ultimosErrores, "reporte_errores.html");
+        reportes.generarReporteEstadisticas(ultimosTokens, ultimosErrores, ultimoTotalLineas, "reporte_estadisticas.html"); 
+        
         barraEstado.setText("Reportes generados en la carpeta del proyecto.");
 
     }//GEN-LAST:event_botonReportesActionPerformed

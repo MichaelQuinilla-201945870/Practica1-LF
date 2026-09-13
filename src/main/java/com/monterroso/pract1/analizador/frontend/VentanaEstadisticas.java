@@ -95,8 +95,8 @@ public class VentanaEstadisticas extends javax.swing.JDialog {
         lblNumLineas = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         panelTarjetaErrores = new javax.swing.JPanel();
-        lblNumErrores = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lblNumErrores = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         scrollTabla = new javax.swing.JScrollPane();
         tablaFrecuencia = new javax.swing.JTable();
@@ -105,12 +105,15 @@ public class VentanaEstadisticas extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estadísticas del Análisis");
 
+        panelTarjetaTokens.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 255), 5, true));
         panelTarjetaTokens.setPreferredSize(new java.awt.Dimension(250, 150));
 
-        lblNumTokens.setFont(new java.awt.Font("Noto Sans", 0, 36)); // NOI18N
+        lblNumTokens.setFont(new java.awt.Font("Noto Sans", 0, 60)); // NOI18N
+        lblNumTokens.setForeground(new java.awt.Color(0, 204, 255));
         lblNumTokens.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNumTokens.setText("2");
+        lblNumTokens.setText("4");
 
+        jLabel2.setFont(new java.awt.Font("Noto Sans Black", 0, 13)); // NOI18N
         jLabel2.setText("Tokens");
 
         javax.swing.GroupLayout panelTarjetaTokensLayout = new javax.swing.GroupLayout(panelTarjetaTokens);
@@ -120,29 +123,31 @@ public class VentanaEstadisticas extends javax.swing.JDialog {
             .addGroup(panelTarjetaTokensLayout.createSequentialGroup()
                 .addGroup(panelTarjetaTokensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTarjetaTokensLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(lblNumTokens, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(68, 68, 68)
+                        .addComponent(lblNumTokens, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelTarjetaTokensLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addGap(97, 97, 97)
                         .addComponent(jLabel2)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         panelTarjetaTokensLayout.setVerticalGroup(
             panelTarjetaTokensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetaTokensLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblNumTokens, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+            .addGroup(panelTarjetaTokensLayout.createSequentialGroup()
+                .addComponent(lblNumTokens, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(15, 15, 15))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
+        panelTarjetaLineas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 0), 5, true));
         panelTarjetaLineas.setPreferredSize(new java.awt.Dimension(250, 150));
 
-        lblNumLineas.setFont(new java.awt.Font("Noto Sans", 0, 36)); // NOI18N
+        lblNumLineas.setFont(new java.awt.Font("Noto Sans", 0, 60)); // NOI18N
+        lblNumLineas.setForeground(new java.awt.Color(0, 204, 0));
         lblNumLineas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNumLineas.setText("2");
 
+        jLabel1.setFont(new java.awt.Font("Noto Sans Black", 0, 13)); // NOI18N
         jLabel1.setText("Lineas con Tokens");
 
         javax.swing.GroupLayout panelTarjetaLineasLayout = new javax.swing.GroupLayout(panelTarjetaLineas);
@@ -151,52 +156,57 @@ public class VentanaEstadisticas extends javax.swing.JDialog {
             panelTarjetaLineasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTarjetaLineasLayout.createSequentialGroup()
                 .addGap(59, 59, 59)
-                .addGroup(panelTarjetaLineasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNumLineas, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addContainerGap(58, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetaLineasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNumLineas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
         panelTarjetaLineasLayout.setVerticalGroup(
             panelTarjetaLineasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTarjetaLineasLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lblNumLineas, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(lblNumLineas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
+        panelTarjetaErrores.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 0), 5, true));
         panelTarjetaErrores.setPreferredSize(new java.awt.Dimension(250, 150));
 
-        lblNumErrores.setFont(new java.awt.Font("Noto Sans", 0, 36)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Noto Sans Black", 0, 13)); // NOI18N
+        jLabel3.setText("Errores");
+
+        lblNumErrores.setFont(new java.awt.Font("Noto Sans", 0, 60)); // NOI18N
+        lblNumErrores.setForeground(new java.awt.Color(255, 0, 0));
         lblNumErrores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNumErrores.setText("2");
-
-        jLabel3.setText("Errores");
 
         javax.swing.GroupLayout panelTarjetaErroresLayout = new javax.swing.GroupLayout(panelTarjetaErrores);
         panelTarjetaErrores.setLayout(panelTarjetaErroresLayout);
         panelTarjetaErroresLayout.setHorizontalGroup(
             panelTarjetaErroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetaErroresLayout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+            .addGroup(panelTarjetaErroresLayout.createSequentialGroup()
+                .addContainerGap(72, Short.MAX_VALUE)
                 .addGroup(panelTarjetaErroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNumErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetaErroresLayout.createSequentialGroup()
+                        .addComponent(lblNumErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetaErroresLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(36, 36, 36)))
-                .addGap(56, 56, 56))
+                        .addGap(93, 93, 93))))
         );
         panelTarjetaErroresLayout.setVerticalGroup(
             panelTarjetaErroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTarjetaErroresLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(lblNumErrores, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(lblNumErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
 
+        jLabel4.setFont(new java.awt.Font("Noto Sans Black", 0, 18)); // NOI18N
         jLabel4.setText("Frecuencia por tipo de token");
 
         tablaFrecuencia.setModel(new javax.swing.table.DefaultTableModel(
@@ -221,39 +231,34 @@ public class VentanaEstadisticas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCerrarEstadistica)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(scrollTabla)
-                        .addComponent(jLabel4)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(panelTarjetaTokens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(50, 50, 50)
-                            .addComponent(panelTarjetaLineas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(50, 50, 50)
-                            .addComponent(panelTarjetaErrores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelTarjetaTokens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(panelTarjetaLineas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(panelTarjetaErrores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnCerrarEstadistica)
+                        .addComponent(scrollTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(panelTarjetaTokens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(panelTarjetaLineas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(panelTarjetaErrores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(panelTarjetaTokens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelTarjetaLineas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelTarjetaErrores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(scrollTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCerrarEstadistica)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
