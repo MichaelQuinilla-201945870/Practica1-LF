@@ -70,28 +70,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador Lexico Promptzal");
+        setBackground(new java.awt.Color(0, 0, 51));
+        setUndecorated(false);
 
         barraEstado.setText("Listo");
         barraEstado.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 
         jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
 
+        botonAbrir.setBackground(new java.awt.Color(153, 153, 153));
+        botonAbrir.setForeground(new java.awt.Color(51, 51, 51));
         botonAbrir.setText("Abrir");
+        botonAbrir.setMargin(new java.awt.Insets(5, 14, 2, 14));
         botonAbrir.addActionListener(this::botonAbrirActionPerformed);
         jToolBar1.add(botonAbrir);
 
+        botonGuardar.setBackground(new java.awt.Color(153, 153, 153));
+        botonGuardar.setForeground(new java.awt.Color(51, 51, 51));
         botonGuardar.setText("Guardar");
         botonGuardar.addActionListener(this::botonGuardarActionPerformed);
         jToolBar1.add(botonGuardar);
 
+        botonAnalizar.setBackground(new java.awt.Color(153, 153, 153));
+        botonAnalizar.setForeground(new java.awt.Color(51, 51, 51));
         botonAnalizar.setText("Analizar");
         botonAnalizar.addActionListener(this::botonAnalizarActionPerformed);
         jToolBar1.add(botonAnalizar);
 
+        botonReportes.setBackground(new java.awt.Color(153, 153, 153));
+        botonReportes.setForeground(new java.awt.Color(51, 51, 51));
         botonReportes.setText("Generar Reportes");
         botonReportes.addActionListener(this::botonReportesActionPerformed);
         jToolBar1.add(botonReportes);
 
+        btnVerAFD.setBackground(new java.awt.Color(153, 153, 153));
+        btnVerAFD.setForeground(new java.awt.Color(51, 51, 51));
         btnVerAFD.setText("Ver AFD");
         btnVerAFD.setFocusable(false);
         btnVerAFD.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -99,6 +113,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnVerAFD.addActionListener(this::btnVerAFDActionPerformed);
         jToolBar1.add(btnVerAFD);
 
+        btnEstadisticas.setBackground(new java.awt.Color(153, 153, 153));
+        btnEstadisticas.setForeground(new java.awt.Color(51, 51, 51));
         btnEstadisticas.setText("Estadisticas");
         btnEstadisticas.setFocusable(false);
         btnEstadisticas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -106,13 +122,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEstadisticas.addActionListener(this::btnEstadisticasActionPerformed);
         jToolBar1.add(btnEstadisticas);
 
-        jSplitPane1.setDividerLocation(150);
+        jSplitPane1.setDividerLocation(200);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         scrollEditor.setBorder(BorderFactory.createTitledBorder("Editor .pz"));
 
         editor.setColumns(20);
         editor.setRows(5);
+        editor.setName(""); // NOI18N
         scrollEditor.setViewportView(editor);
 
         jSplitPane1.setTopComponent(scrollEditor);
@@ -153,19 +170,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 997, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(barraEstado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1023, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(barraEstado)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraEstado))
         );

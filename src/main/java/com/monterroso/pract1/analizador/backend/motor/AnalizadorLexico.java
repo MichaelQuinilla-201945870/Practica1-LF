@@ -275,7 +275,12 @@ public class AnalizadorLexico {
     }
 
     public int getTotalLineas() {
-        return fila;
+        
+        if (codigoFuente.isEmpty()) {
+            return 0;
+        }
+        // si el archivo termina con salto de linea, 'fila' ya apunta a una linea vacia
+        return codigoFuente.endsWith("\n") ? fila - 1 : fila;
     }
 
 }
